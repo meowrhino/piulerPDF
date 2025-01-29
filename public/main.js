@@ -1,5 +1,6 @@
 // 1. URL del servidor (si estuviera en otro lado, ajusta la IP o dominio)
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://piuler.onrender.com'; // ✅ Esto funcionará desde cualquier lugar
+
 
 // 2. Capturamos los elementos del DOM
 const usernameInput = document.getElementById('username');
