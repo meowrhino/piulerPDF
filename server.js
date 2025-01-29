@@ -69,7 +69,9 @@ app.post('/post', (req, res) => {
 app.use(express.static('public'));
 
 // 8. Iniciar servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 3000;  // Railway asigna un puerto dinámico
+
+app.listen(PORT, '0.0.0.0', () => {  // Usa '0.0.0.0' para que sea accesible desde fuera
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+
