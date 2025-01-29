@@ -1,77 +1,66 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
 
-// Archivo donde guardaremos los posts
-const POSTS_FILE = 'posts.json';
-
-// 1. Función para leer posts desde posts.json
-function loadPosts() {
-  try {
-    const data = fs.readFileSync(POSTS_FILE, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    // Si no existe el archivo o no se puede leer, devolvemos un array vacío
-    console.error('No se pudo leer posts.json. Se usará un array vacío.');
-    return [];
-  }
-}
-
-// 2. Función para guardar posts en posts.json
-function savePosts(posts) {
-  try {
-    fs.writeFileSync(POSTS_FILE, JSON.stringify(posts, null, 2));
-  } catch (error) {
-    console.error('No se pudo escribir en posts.json:', error);
-  }
-}
-
-// 3. Cargamos los posts al iniciar
-let posts = loadPosts();
-
-// 4. Creamos la app de Express
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// 5. Endpoint para obtener los posts
-app.get('/posts', (req, res) => {
-  // Ordenar los posts (más nuevo primero)
-  const sortedPosts = [...posts].sort((a, b) => b.timestamp - a.timestamp);
-  res.json(sortedPosts);
+// Conectar con SQLite
+const db = new sqlite3.Database('database.db', (err) => {
+  if (err) {
+    console.error('Error al conectar con SQLite:', err.message);
+  } else {
+    console.log('Conectado a la base de datos SQLite.');
+  }
 });
 
-// 6. Endpoint para crear un nuevo post
+// Crear tabla si no existe
+db.run(`CREATE TABLE IF NOT EXISTS posts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT,
+  content TEXT,
+  timestamp INTEGER
+)`);
+
+// Obtener los posts
+app.get('/posts', (req, res) => {
+  db.all('SELECT * FROM posts ORDER BY timestamp DESC', [], (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Publicar un nuevo tweet
 app.post('/post', (req, res) => {
   const { username, content } = req.body;
-
   if (!username || !content) {
     return res.status(400).json({ error: 'Faltan datos' });
   }
 
-  const newPost = {
-    username,
-    content,
-    timestamp: Date.now()
-  };
-
-  // Añadimos el nuevo post al array
-  posts.push(newPost);
-
-  // Guardamos en el archivo JSON para persistir
-  savePosts(posts);
-
-  res.status(201).json(newPost);
+  const timestamp = Date.now();
+  db.run(
+    `INSERT INTO posts (username, content, timestamp) VALUES (?, ?, ?)`,
+    [username, content, timestamp],
+    function (err) {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.status(201).json({ id: this.lastID, username, content, timestamp });
+      }
+    }
+  );
 });
 
-// 7. Servir archivos estáticos (HTML, JS, CSS)
+// Servir archivos estáticos (frontend)
 app.use(express.static('public'));
 
-// 8. Iniciar servidor
-const PORT = process.env.PORT || 3000;  // Railway asigna un puerto dinámico
-
-app.listen(PORT, '0.0.0.0', () => {  // Usa '0.0.0.0' para que sea accesible desde fuera
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+// Iniciar servidor en el puerto asignado por Render
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor escuchando en http://0.0.0.0:${PORT}`);
 });
-
