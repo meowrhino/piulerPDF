@@ -18,5 +18,10 @@
     "username": "Hola hola",
     "content": "Ola manu",
     "timestamp": 1738276024936
+  },
+  {
+    "username": "manu",
+    "content": "colores aplicados si tu nombre es manu será amarillo el texto si tu nombre es test será gris si no estás registrado será blanco voy a ver si consigo que tenga una fuente más bonita o un fondo de algún colorcillo menos desagradable",
+    "timestamp": 1738277516463
   }
 ]
