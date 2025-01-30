@@ -1,3 +1,4 @@
+
 const API_URL = 'https://piuler.onrender.com';
 
 const usernameInput = document.getElementById('username');
@@ -51,9 +52,12 @@ function renderPosts(posts) {
         divPost.className = 'post';
         divPost.style = userStyles[post.username] || "color: white; background-color: black; padding: 10px; border-radius: 5px;";
 
+        // Obtener los últimos dígitos del timestamp para que sea más corto
+        const shortId = post.timestamp.toString().slice(-6);
+
         divPost.innerHTML = `
-            <p><strong>${post.username}</strong> <small>ID: ${post.id} - ${formatTimestamp(post.timestamp)}</small></p>
-            <p>${post.content}</p>
+            <p class="post-meta"><strong>${post.username}</strong> <small>${shortId} - ${formatTimestamp(post.timestamp)}</small></p>
+            <p class="post-content">${post.content}</p>
         `;
 
         timeline.appendChild(divPost);

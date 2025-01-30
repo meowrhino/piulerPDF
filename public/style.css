@@ -1,46 +1,66 @@
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Merriweather:wght@300;400&display=swap');
+
 body {
-  font-family: 'Fira Code', monospace;
-  margin: 20px auto;
-  max-width: 600px;
-  background-color: #121212;
-  color: #e0e0e0;
-  background-image: radial-gradient(#444 1px, transparent 1px);
-  background-size: 8px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #121212;
+    color: #e0e0e0;
+    background-image: radial-gradient(#333 0.5px, transparent 0.5px);
+    background-size: 6px 6px;
 }
 
 .post-form {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 #username,
 #content {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  font-size: 1rem;
-  background-color: #222;
-  color: #fff;
-  border: 1px solid #444;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 1rem;
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #444;
 }
 
 #timeline .post {
-  border: 1px solid #444;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  background-color: #1a1a1a;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #1a1a1a;
 }
 
-.post p {
-  font-family: 'Open Sans', sans-serif;
+.post-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: #bbb;
 }
 
-.post small {
-  font-family: 'Merriweather', serif;
+.post-content {
+    font-family: 'Merriweather', serif;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
-.post strong {
-  font-family: 'Merriweather', serif;
+@media (max-width: 600px) {
+    body {
+        margin: 10px;
+    }
+    
+    #timeline .post {
+        padding: 8px;
+    }
+
+    .post-meta {
+        font-size: 0.8rem;
+    }
+
+    .post-content {
+        font-size: 0.9rem;
+    }
 }
