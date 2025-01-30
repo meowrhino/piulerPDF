@@ -52,7 +52,7 @@ function renderPosts(posts) {
         divPost.style = userStyles[post.username] || "color: white; background-color: black; padding: 10px; border-radius: 5px;";
 
         divPost.innerHTML = `
-            <p><strong>${post.username}</strong> <small>${formatTimestamp(post.timestamp)}</small></p>
+            <p><strong>${post.username}</strong> <small>ID: ${post.id} - ${formatTimestamp(post.timestamp)}</small></p>
             <p>${post.content}</p>
         `;
 
