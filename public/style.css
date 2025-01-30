@@ -7,8 +7,6 @@ body {
     max-width: 600px;
     background-color: #121212;
     color: #e0e0e0;
-    background-image: radial-gradient(#333 0.5px, transparent 0.5px);
-    background-size: 6px 6px;
 }
 
 .post-form {
