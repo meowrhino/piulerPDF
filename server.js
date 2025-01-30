@@ -2,17 +2,27 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// ✅ Servir archivos estáticos desde la carpeta `public`
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ✅ Ruta para la página principal
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// 🔹 Configuración de GitHub API
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const REPO_OWNER = "meowrhino";
-const REPO_NAME = "piuler";
+const REPO_OWNER = "meowrhino";  // 🔹 Tu usuario de GitHub
+const REPO_NAME = "piuler";      // 🔹 Nombre del repo
 const FILE_PATH = "posts.json";
 
-// Obtener los posts desde GitHub
+// ✅ Obtener los posts desde GitHub
 app.get('/posts', async (req, res) => {
     try {
         const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
@@ -36,7 +46,7 @@ app.get('/posts', async (req, res) => {
     }
 });
 
-// Publicar un nuevo tweet y actualizar GitHub
+// ✅ Publicar un nuevo tweet y actualizar GitHub
 app.post('/post', async (req, res) => {
     const { username, content } = req.body;
     if (!username || !content) {
@@ -92,8 +102,8 @@ app.post('/post', async (req, res) => {
     }
 });
 
-// Iniciar el servidor en Render
-const PORT = process.env.PORT || 3000;
+// ✅ Iniciar el servidor en Render
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor escuchando en http://0.0.0.0:${PORT}`);
 });
