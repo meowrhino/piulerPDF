@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fetch = require('node-fetch'); // Necesario para hacer peticiones a la API de GitHub
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +21,10 @@ app.get('/posts', async (req, res) => {
                 "Accept": "application/vnd.github.v3+json"
             }
         });
+
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
 
         const fileData = await response.json();
         const content = JSON.parse(Buffer.from(fileData.content, 'base64').toString());
@@ -49,6 +52,10 @@ app.post('/post', async (req, res) => {
             }
         });
 
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
+
         const fileData = await response.json();
         const existingContent = JSON.parse(Buffer.from(fileData.content, 'base64').toString());
 
@@ -60,7 +67,7 @@ app.post('/post', async (req, res) => {
         const updatedContent = Buffer.from(JSON.stringify(existingContent, null, 2)).toString('base64');
 
         // Hacer commit con los cambios en GitHub
-        await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+        const updateResponse = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
             method: "PUT",
             headers: {
                 "Authorization": `token ${GITHUB_TOKEN}`,
@@ -73,6 +80,10 @@ app.post('/post', async (req, res) => {
                 sha: fileData.sha // Se necesita para actualizar el archivo en GitHub
             })
         });
+
+        if (!updateResponse.ok) {
+            throw new Error(`Error al actualizar GitHub: ${updateResponse.status}`);
+        }
 
         res.status(201).json(newTweet);
     } catch (error) {
