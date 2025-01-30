@@ -2,23 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Microblog Sencillo</title>
+  <title>Piuler PDFs</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Microblog Sencillo</h1>
+  <h1>Piuler PDFs</h1>
   
   <!-- Sección para publicar -->
   <div class="post-form">
-    <input id="username" type="text" placeholder="Nombre de usuario" />
-    <textarea id="content" placeholder="¿Qué estás pensando?"></textarea>
+    <input id="title" type="text" placeholder="Título" />
+    <input id="synopsis" type="text" placeholder="Sinopsis" />
+    <textarea id="content" placeholder="Contenido"></textarea>
     <button id="btnPost">Publicar</button>
   </div>
 
   <hr />
 
   <!-- Sección del timeline -->
-  <h2>Timeline</h2>
+  <h2>Publicaciones</h2>
   <div id="timeline"></div>
 
   <script src="main.js"></script>

@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Merriweather:wght@300;400&display=swap');
 
 body {
@@ -7,18 +6,18 @@ body {
     max-width: 600px;
     background-color: #000000;
     opacity: 0.8;
-    background: linear-gradient(135deg, #30303055 25%, transparent 25%) -10px 0/ 20px 20px, 
-                linear-gradient(225deg, #303030 25%, transparent 25%) -10px 0/ 20px 20px, 
-                linear-gradient(315deg, #30303055 25%, transparent 25%) 0px 0/ 20px 20px, 
-                linear-gradient(45deg, #303030 25%, #000000 25%) 0px 0/ 20px 20px;
-    color: #e0e0e0;
+    background-image:  linear-gradient(135deg, #303030 25%, transparent 25%), linear-gradient(225deg, #303030 25%, transparent 25%), linear-gradient(45deg, #303030 25%, transparent 25%), linear-gradient(315deg, #303030 25%, #000000 25%);
+    background-position:  10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
 }
 
 .post-form {
     margin-bottom: 20px;
 }
 
-#username,
+#title,
+#synopsis,
 #content {
     display: block;
     width: 100%;
@@ -38,9 +37,13 @@ body {
     background-color: #1a1a1a;
 }
 
-.post-meta {
-    font-family: 'Monomaniac One', monospace;
-    font-size: 0.9rem;
+.post-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.post-synopsis {
+    font-style: italic;
     color: #bbb;
 }
 
@@ -48,22 +51,11 @@ body {
     font-family: 'Merriweather', serif;
     font-size: 1rem;
     line-height: 1.5;
+    display: none;
 }
 
-@media (max-width: 600px) {
-    body {
-        margin: 10px;
-    }
-    
-    #timeline .post {
-        padding: 8px;
-    }
-
-    .post-meta {
-        font-size: 0.8rem;
-    }
-
-    .post-content {
-        font-size: 0.9rem;
-    }
+.toggle-btn {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
 }
