@@ -8,8 +8,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const REPO_OWNER = "TU_USUARIO";  // 🔹 Cambia esto por tu usuario de GitHub
-const REPO_NAME = "TU_REPO";  // 🔹 Cambia esto por el nombre de tu repositorio
+const REPO_OWNER = "meowrhino";
+const REPO_NAME = "piuler";
 const FILE_PATH = "posts.json";
 
 // Obtener los posts desde GitHub
