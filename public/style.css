@@ -5,7 +5,12 @@ body {
     font-family: 'Monomaniac One', monospace;
     margin: 20px auto;
     max-width: 600px;
-    background-color: #121212;
+    background-color: #000000;
+    opacity: 0.8;
+    background: linear-gradient(135deg, #30303055 25%, transparent 25%) -10px 0/ 20px 20px, 
+                linear-gradient(225deg, #303030 25%, transparent 25%) -10px 0/ 20px 20px, 
+                linear-gradient(315deg, #30303055 25%, transparent 25%) 0px 0/ 20px 20px, 
+                linear-gradient(45deg, #303030 25%, #000000 25%) 0px 0/ 20px 20px;
     color: #e0e0e0;
 }
 
