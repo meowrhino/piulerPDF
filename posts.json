@@ -8,5 +8,10 @@
     "username": "manu",
     "content": "test github https://github.com/meowrhino/piuler",
     "timestamp": 1738273206164
+  },
+  {
+    "username": "manu",
+    "content": "ay chica que funciona!!! el package.json se ha actualizado:\n\n[\n  {\n    \"username\": \"test\",\n    \"content\": \"test\",\n    \"timestamp\": 1738161138339\n  },\n  {\n    \"username\": \"manu\",\n    \"content\": \"test github https://github.com/meowrhino/piuler\",\n    \"timestamp\": 1738273206164\n  }\n]",
+    "timestamp": 1738273250057
   }
 ]
