@@ -5,17 +5,51 @@ const contentInput = document.getElementById('content');
 const btnPost = document.getElementById('btnPost');
 const timeline = document.getElementById('timeline');
 
-function formatTimestamp(timestamp) {
+// 🎨 Estilos para cada usuario
+const userStyles = {
+    "test": "color: #aaa; background-color: #000; padding: 10px; border-radius: 5px;",
+    "manu": "color: #FFD700; background-color: #000; padding: 10px; border-radius: 5px;"
+};
+
+// 📅 Función para formatear la fecha en encabezados
+function formatDate(timestamp) {
     const date = new Date(timestamp);
-    return date.toLocaleString();
+    return date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 }
 
+// ⏳ Función para formatear la hora
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+}
+
+// 🔄 Función para mostrar los posts agrupados por día
 function renderPosts(posts) {
     timeline.innerHTML = '';
 
+    // 🆕 Ordenar posts del más reciente al más antiguo
+    posts.sort((a, b) => b.timestamp - a.timestamp);
+
+    let lastDate = null;
+
     posts.forEach(post => {
+        const postDate = formatDate(post.timestamp);
+
+        // 📌 Si el día es diferente al anterior, agregar un encabezado de fecha
+        if (postDate !== lastDate) {
+            const dateHeader = document.createElement('h2');
+            dateHeader.textContent = postDate;
+            dateHeader.style.textAlign = "center";
+            dateHeader.style.color = "#FFF";
+            dateHeader.style.marginTop = "20px";
+            timeline.appendChild(dateHeader);
+            lastDate = postDate;
+        }
+
+        // 🖌️ Crear div de post con estilos según usuario
         const divPost = document.createElement('div');
         divPost.className = 'post';
+        divPost.style = userStyles[post.username] || "color: white; background-color: black; padding: 10px; border-radius: 5px;";
 
         divPost.innerHTML = `
             <p><strong>${post.username}</strong> <small>${formatTimestamp(post.timestamp)}</small></p>
@@ -26,7 +60,7 @@ function renderPosts(posts) {
     });
 }
 
-// Cargar posts desde GitHub
+// 🔄 Cargar posts desde el servidor
 async function loadPosts() {
     try {
         const res = await fetch(`${API_URL}/posts`);
@@ -37,7 +71,7 @@ async function loadPosts() {
     }
 }
 
-// Publicar un nuevo post y actualizar GitHub
+// ✍️ Publicar un nuevo tweet
 btnPost.addEventListener('click', async () => {
     const username = usernameInput.value.trim();
     const content = contentInput.value.trim();
@@ -63,4 +97,5 @@ btnPost.addEventListener('click', async () => {
     }
 });
 
+// 🔄 Cargar los posts al inicio
 loadPosts();
